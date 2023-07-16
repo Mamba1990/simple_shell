@@ -1,16 +1,16 @@
 #include "shell.h"
 /**
  * list_len - precise length of list
- * @h: first node
+ * @head: 1st node
  * Return: list's size
  */
-size_t list_len(const list_t *h)
+size_t list_len(const list_t *head)
 {
 	size_t j = 0;
 
-	while (h)
+	while (head)
 	{
-		h = h->next;
+		head = head->next;
 		j++;
 	}
 	return (j);
@@ -18,22 +18,22 @@ size_t list_len(const list_t *h)
 
 /**
  * list_to_strings - gives array of strings
- * @head: first node
- * Return: array of strings
+ * @h: 1st node
+ * Return: strings' array
  */
-char **list_to_strings(list_t *head)
+char **list_to_strings(list_t *h)
 {
-	list_t *node = head;
-	size_t j = list_len(head), c;
+	list_t *_node = h;
+	size_t j = list_len(h), c;
 	char **s;
 	char *str;
 
-	if (!head || !j)
+	if (!h || !j)
 		return (NULL);
 	s = malloc(sizeof(char *) * (j + 1));
 	if (!s)
 		return (NULL);
-	for (j = 0; node; node = node->next, j++)
+	for (j = 0; _node; _node = _node->next, j++)
 	{
 		str = malloc(_strlen(node->str) + 1);
 		if (!str)
@@ -44,70 +44,70 @@ char **list_to_strings(list_t *head)
 			return (NULL);
 		}
 
-		str = _strcpy(str, node->str);
+		str = _strcpy(str, _node->s);
 		s[j] = str;
 	}
 	s[j] = NULL;
 	return (s);
 }
 /**
- * print_list - print elements of a list
- * @h: first node
+ * print_list - displays elements of a list
+ * @head: 1st node
  * Return: list's size
  */
-size_t print_list(const list_t *h)
+size_t print_list(const list_t *head)
 {
 	size_t j = 0;
 
-	while (h)
+	while (head)
 	{
-		_puts(convert_number(h->num, 10, 0));
+		_puts(convert_number(head->number, 10, 0));
 		_putchar(':');
 		_putchar(' ');
-		_puts(h->str ? h->str : "(nil)");
+		_puts(head->s ? head->s : "(nil)");
 		_puts("\n");
-		h = h->next;
+		head = head->next;
 		j++;
 	}
 	return (j);
 }
 
 /**
- * node_starts_with - determines node that starts with prefix
- * @node: list head
- * @prefix: string
- * @c: character after prefix
+ * node_starts_with - determines node starting with prefix
+ * @_node: list head
+ * @pfix: string
+ * @cc: character after prefix
  * Return: node or null
  */
-list_t *node_starts_with(list_t *node, char *prefix, char c)
+list_t *node_starts_with(list_t *node, char *pfix, char cc)
 {
 	char *a = NULL;
 
-	while (node)
+	while (_node)
 	{
-		a = starts_with(node->str, prefix);
-		if (a && ((c == -1) || (*a == c)))
-			return (node);
-		node = node->next;
+		a = starts_with(_node->s, pfix);
+		if (a && ((cc == -1) || (*a == cc)))
+			return (_node);
+		_node = _node->next;
 	}
 	return (NULL);
 }
 
 /**
  * get_node_index - get node's index
- * @head: list head
- * @node: node
+ * @h: address of the list head
+ * @_node: node
  * Return: node's index or -1
  */
-ssize_t get_node_index(list_t *head, list_t *node)
+ssize_t get_node_index(list_t *h, list_t *_node)
 {
 	size_t j = 0;
 
-	while (head)
+	while (h)
 	{
-		if (head == node)
+		if (h == _node)
 			return (j);
-		head = head->next;
+		h = h->next;
 		j++;
 	}
 	return (-1);

@@ -22,9 +22,9 @@
 
 typedef struct list_str
 {
-        int number;
-        char *s;
-        struct list_str *next;
+	int number;
+	char *s;
+	struct list_str *next;
 } list_t;
 
 /* String Functions */
@@ -55,11 +55,21 @@ int _isalpha(int c);
 int _atoi(char *str);
 
 /* Linked Lists Functions */
+/* 1 */
 list_t *add_node(list_t **h, const char *s, int number);
 list_t *add_node_end(list_t **h, const char *s, int number);
 size_t print_list_str(const list_t *head);
 int delete_node_at_index(list_t **h, unsigned int idx);
 void free_list(list_t **head_p);
+/* 2 */
+size_t list_len(const list_t *head);
+char **list_to_strings(list_t *h);
+size_t print_list(const list_t *head);
+list_t *node_starts_with(list_t *node, char *pfix, char cc);
+ssize_t get_node_index(list_t *h, list_t *_node);
+
+
+
 
 
 #endif
