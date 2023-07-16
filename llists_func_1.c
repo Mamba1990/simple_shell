@@ -1,35 +1,37 @@
 #include "shell.h"
 
-/**
- * add_node - add node to start of list
- * @head: head node
- * @str: str field of node
- * @num: node index
- * Return: size of list
- */
-list_t *add_node(list_t **head, const char *str, int num)
-{
-	list_t *h;
 
-	if (!head)
-		return (NULL);
-	h = malloc(sizeof(list_t));
+/**
+ * add_node - adds a node to the start of the list
+ * @h: pointer of pointer to head node
+ * @s: string member of node
+ * @number: index that history uses
+ *
+ * Return: list's size
+ */
+list_t *add_node(list_t **h, const char *s, int number)
+{
+	list_t *head;
+
 	if (!h)
 		return (NULL);
-	_memset((void *)h, 0, sizeof(list_t));
-	h->num = num;
-	if (str)
+	head = malloc(sizeof(list_t));
+	if (!head)
+		return (NULL);
+	_memset((void *)head, 0, sizeof(list_t));
+	head->number= number;
+	if (s)
 	{
-		h->str = _strdup(str);
-		if (!h->str)
+		head->s = _strdup(s);
+		if (!head->s)
 		{
-			free(h);
+			free(head);
 			return (NULL);
 		}
 	}
-	h->next = *head;
-	*head = h;
-	return (h);
+	head->next = *h;
+	*h = head;
+	return (head);
 }
 
 /**
