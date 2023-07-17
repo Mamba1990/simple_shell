@@ -146,6 +146,10 @@ int _eputchar(char cc);
 int _putfd(char cc, int f);
 int _putsfd(char *s, int f);
 
+/* Informations Getter Functions */
+void clear_info(info_t *inf);
+void set_info(info_t *inf, char **av);
+void free_info(info_t *inf, int all_f);
 
 
 
