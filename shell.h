@@ -151,7 +151,14 @@ void clear_info(info_t *inf);
 void set_info(info_t *inf, char **av);
 void free_info(info_t *inf, int all_f);
 
-
+/* Environ Functions */
+/* 1 */
+int _myenv(info_t *inf);
+char *_getenv(info_t *inf, const char *name);
+int _mysetenv(info_t *inf);
+int _myunsetenv(info_t *inf);
+int populate_env_list(info_t *inf);
+/* 2 /
 
 
 #endif
