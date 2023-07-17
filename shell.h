@@ -158,7 +158,11 @@ char *_getenv(info_t *inf, const char *name);
 int _mysetenv(info_t *inf);
 int _myunsetenv(info_t *inf);
 int populate_env_list(info_t *inf);
-/* 2 /
+/* 2 */
+char **get_environ(info_t *inf);
+int _unsetenv(info_t *inf, char *var);
+int _setenv(info_t *inf, char *var, char *value);
+
 
 
 #endif
