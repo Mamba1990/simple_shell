@@ -94,6 +94,10 @@ typedef struct infoPasser
 	int histCount;
 } info_t;
 
+#define _INFO_INIT \
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+	0, 0, 0}
+
 /* String Functions */
 int _strlen(char *s);
 int _strcmp(char *str1, char *str2);

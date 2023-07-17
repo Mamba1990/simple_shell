@@ -25,14 +25,14 @@ void _eputs(char *s)
 int _eputchar(char cc)
 {
 	static int j;
-	static char buff[WRITE_BUF_SIZE];
+	static char buff[WRITE_BUFF_S];
 
-	if (cc == BUF_FLUSH || j >= WRITE_BUF_SIZE)
+	if (cc == BUFF_FLUSH || j >= WRITE_BUFF_S)
 	{
 		write(2, buff, j);
 		j = 0;
 	}
-	if (cc != BUF_FLUSH)
+	if (cc != BUFF_FLUSH)
 		buff[j++] = cc;
 	return (1);
 }
@@ -46,14 +46,14 @@ int _eputchar(char cc)
 int _putfd(char cc, int f)
 {
 	static int j;
-	static char buff[WRITE_BUF_SIZE];
+	static char buff[WRITE_BUFF_S];
 
-	if (cc == BUF_FLUSH || j >= WRITE_BUF_SIZE)
+	if (cc == BUFF_FLUSH || j >= WRITE_BUFF_S)
 	{
 		write(f, buff, j);
 		j = 0;
 	}
-	if (cc != BUF_FLUSH)
+	if (cc != BUFF_FLUSH)
 		buff[j++] = cc;
 	return (1);
 }
