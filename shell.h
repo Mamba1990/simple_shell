@@ -163,6 +163,11 @@ char **get_environ(info_t *inf);
 int _unsetenv(info_t *inf, char *var);
 int _setenv(info_t *inf, char *var, char *value);
 
-
+/* History Functions */
+char *get_history_file(info_t *inf);
+int write_history(info_t *inf);
+int read_history(info_t *inf);
+int build_history_list(info_t *inf, char *buff, int lineCount);
+int renumber_history(info_t *inf);
 
 #endif
