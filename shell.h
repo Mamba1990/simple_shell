@@ -93,6 +93,11 @@ typedef struct infoPasser
 	int read_fd;
 	int histCount;
 } info_t;
+typedef struct builtIn
+{
+	char *type;
+	int (*func)(info_t *);
+} builtinTable;
 
 #define _INFO_INIT \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
