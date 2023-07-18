@@ -170,4 +170,15 @@ int read_history(info_t *inf);
 int build_history_list(info_t *inf, char *buff, int lineCount);
 int renumber_history(info_t *inf);
 
+/* Path Functions */
+int is_cmd(info_t *inf, char *_path);
+char *dup_chars(char *path_str, int _start, int _stop);
+char *find_path(info_t *inf, char *path_str, char *_cmd);
+/* Builters Functions */
+/* 1 */
+int _myexit(info_t *inf);
+int _mycd(info_t *inf);
+int _myhelp(info_t *inf;
+/* 2 */
+
 #endif
