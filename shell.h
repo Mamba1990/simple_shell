@@ -194,5 +194,11 @@ int set_alias(info_t *inf, char *_str);
 int print_alias(list_t *_node);
 int _myalias(info_t *inf);
 
+/* Chain Functions */
+int is_chain(info_t *inf, char *buff, size_t *ptr);
+void check_chain(info_t *inf, char *buff, size_t *ptr, size_t j, size_t length);
+int replace_alias(info_t *inf);
+int replace_vars(info_t *inf);
+int replace_string(char **ol, char *ne);
 
 #endif
