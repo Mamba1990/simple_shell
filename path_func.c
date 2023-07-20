@@ -7,13 +7,13 @@
  */
 int is_cmd(info_t *inf, char *_path)
 {
-	struct stat _st;
+	struct stat st;
 
 	(void)inf;
-	if (!_path || stat(_path, &_st))
+	if (!_path || stat(_path, &st))
 		return (0);
 
-	if (_st.st_mode & S_IFREG)
+	if (st.st_mode & S_IFREG)
 	{
 		return (1);
 	}
