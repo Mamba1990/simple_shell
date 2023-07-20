@@ -12,7 +12,7 @@ int _myexit(info_t *inf)
 	if (inf->argv[1])  
 	{
 		exitCheck = _erratoi(inf->argv[1]);
-		if (exit_check == -1)
+		if (exitCheck == -1)
 		{
 			inf->status = 2;
 			print_error(inf, "Illegal number: ");

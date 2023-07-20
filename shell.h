@@ -122,6 +122,7 @@ char **strtow2(char *s, char dl);
 char *_memset(char *s, char b, unsigned int n);
 void ffree(char **ss);
 void *_realloc(void *p, unsigned int oldSize, unsigned int newSize);
+int bfree(void **p);
 
 /* Supplumentary Functions */
 
@@ -150,6 +151,13 @@ void _eputs(char *s);
 int _eputchar(char cc);
 int _putfd(char cc, int f);
 int _putsfd(char *s, int f);
+
+/* 2 */
+int _erratoi(char *str);
+void print_error(info_t *inf, char *errs);
+int print_d(int iput, int fid);
+char *convert_number(long int number, int b, int flgs);
+void remove_comments(char *buff);
 
 /* Informations Getter Functions */
 void clear_info(info_t *inf);
@@ -185,7 +193,7 @@ char *find_path(info_t *inf, char *path_str, char *_cmd);
 /* 1 */
 int _myexit(info_t *inf);
 int _mycd(info_t *inf);
-int _myhelp(info_t *inf;
+int _myhelp(info_t *inf);
 
 /* 2 */
 int _myhistory(info_t *inf);
@@ -200,5 +208,18 @@ void check_chain(info_t *inf, char *buff, size_t *ptr, size_t j, size_t length);
 int replace_alias(info_t *inf);
 int replace_vars(info_t *inf);
 int replace_string(char **ol, char *ne);
+
+/* Line Getter Functions */
+ssize_t input_buf(info_t *inf, char **buff, size_t *length);
+ssize_t get_input(info_t *inf);
+ssize_t read_buff(info_t *inf, char *buff, size_t *j);
+void sigintHandler(__attribute__((unused))int sigNum);
+
+/* hsh Functions */
+int hsh(info_t *inf, char **av);
+int find_builtin(info_t *inf);
+void find_cmd(info_t *inf);
+void fork_cmd(info_t *inf);
+
 
 #endif

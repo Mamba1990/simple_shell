@@ -7,10 +7,10 @@
  */
 char **get_environ(info_t *inf)
 {
-	if (!inf->environ || info->envChanged)
+	if (!inf->environ || inf->envChanged)
 	{
 		inf->environ = list_to_strings(inf->env);
-		info->envChanged = 0;
+		inf->envChanged = 0;
 	}
 
 	return (inf->environ);
@@ -32,7 +32,7 @@ int _unsetenv(info_t *inf, char *var)
 
 	while (_node)
 	{
-		ptr = starts_with(node->s, var);
+		ptr = starts_with(_node->s, var);
 		if (ptr && *ptr == '=')
 		{
 			inf->envChanged = delete_node_at_index(&(inf->env), j);
@@ -68,10 +68,10 @@ int _setenv(info_t *inf, char *var, char *value)
 	_strcpy(buff, var);
 	_strcat(buff, "=");
 	_strcat(buff, value);
-	-node = inf->env;
+	_node = inf->env;
 	while (_node)
 	{
-		ptr = starts_with(node->s, var);
+		ptr = starts_with(_node->s, var);
 		if (ptr && *ptr == '=')
 		{
 			free(_node->s);

@@ -1,154 +1,170 @@
 #include "shell.h"
 
 /**
- * is_chain - test if current char in buffer is a chain delimeter
- * @info: the parameter struct
- * @buf: the char buffer
- * @p: address of current position in buf
+ * input_buf - buffers chained commands
+ * @inf: Structure that contains possible args
+ * @buff: pointer to buffer
+ * @length: pointer to of var length
  *
- * Return: 1 if chain delimeter, 0 otherwise
+ * Return: length
  */
-int is_chain(info_t *info, char *buf, size_t *p)
+ssize_t input_buf(info_t *inf, char **buff, size_t *length)
 {
-	size_t j = *p;
+	ssize_t a = 0;
+	size_t len = 0;
 
-	if (buf[j] == '|' && buf[j + 1] == '|')
+	if (!*length) /* if nothing left in the buffer, fill it */
 	{
-		buf[j] = 0;
-		j++;
-		info->cmd_buf_type = CMD_OR;
+		/*bfree((void **)info->cmd_buf);*/
+		free(*buff);
+		*buff = NULL;
+		signal(SIGINT, sigintHandler);
+#if USE_GETLINE
+		a = getline(buff, &len, stdin);
+#else
+		a = _getline(inf, buff, &len);
+#endif
+		if (a > 0)
+		{
+			if ((*buff)[a - 1] == '\n')
+			{
+				(*buff)[a - 1] = '\0'; /* remove trailing newline */
+				a--;
+			}
+			inf->lineCountFlag = 1;
+			remove_comments(*buff);
+			build_history_list(inf, *buff, inf->histCount++);
+			/* if (_strchr(*buf, ';')) is this a command chain? */
+			{
+				*length = a;
+				inf->cmdBuff = buff;
+			}
+		}
 	}
-	else if (buf[j] == '&' && buf[j + 1] == '&')
+	return (a);
+}
+
+/**
+ * get_input - gets line subtracted from the newline
+ * @inf: Structure that contains possible args
+ *
+ * Return: length or -1
+ */
+ssize_t get_input(info_t *inf)
+{
+	static char *buff; /* the ';' command chain buffer */
+	static size_t j, k, length;
+	ssize_t a = 0;
+	char **buffP = &(inf->arg), *ptr;
+
+	_putchar(BUFF_FLUSH);
+	a = input_buf(inf, &buff, &length);
+	if (a == -1) /* EOF */
+		return (-1);
+	if (length)	/* we have commands left in the chain buffer */
 	{
-		buf[j] = 0;
-		j++;
-		info->cmd_buf_type = CMD_AND;
+		k = j; /* init new iterator to current buf position */
+		ptr = buff + j; /* get pointer for return */
+
+		check_chain(inf, buff, &k, j, length);
+		while (k < length) /* iterate to semicolon or end */
+		{
+			if (is_chain(inf, buff, &k))
+				break;
+			k++;
+		}
+
+		j = k + 1; /* increment past nulled ';'' */
+		if (j >= length) /* reached end of buffer? */
+		{
+			j = length = 0; /* reset position and length */
+			inf->cmdBuffType = _CMD_NORM;
+		}
+
+		*buffP = ptr; /* pass back pointer to current command position */
+		return (_strlen(ptr)); /* return length of current command */
 	}
-	else if (buf[j] == ';') /* found end of this command */
-	{
-		buf[j] = 0; /* replace semicolon with null */
-		info->cmd_buf_type = CMD_CHAIN;
-	}
-	else
+
+	*buffP = buff; /* else not a chain, pass back buffer from _getline() */
+	return (a); /* return length of buffer from _getline() */
+}
+
+/**
+ * read_buf - reads buff
+ * @inf: Structure that contains possible args
+ * @buff: the buffer
+ * @j:the  size
+ *
+ * Return: s
+ */
+ssize_t read_buff(info_t *inf, char *buff, size_t *j)
+{
+	ssize_t s = 0;
+
+	if (*j)
 		return (0);
-	*p = j;
-	return (1);
+	s = read(inf->read_fd, buff, READ_BUFF_S);
+	if (s >= 0)
+		*j = s;
+	return (s);
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status
- * @info: the parameter struct
- * @buf: the char buffer
- * @p: address of current position in buf
- * @i: starting position in buf
- * @len: length of buf
+ * _getline - gets next line from STDIN
+ * @inf: Structure that contains possible args
+ * @p: address of pointer to buffer, preallocated or NULL
+ * @leng: size of preallocated ptr buffer if not NULL
  *
- * Return: Void
+ * Return: r
  */
-void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
+int _getline(info_t *inf, char **p, size_t *leng)
 {
-	size_t j = *p;
+	static char buff[READ_BUFF_S];
+	static size_t j, length;
+	size_t i;
+	ssize_t s = 0, r = 0;
+	char *pp = NULL, *newP = NULL, *cc;
 
-	if (info->cmd_buf_type == CMD_AND)
-	{
-		if (info->status)
-		{
-			buf[i] = 0;
-			j = len;
-		}
-	}
-	if (info->cmd_buf_type == CMD_OR)
-	{
-		if (!info->status)
-		{
-			buf[i] = 0;
-			j = len;
-		}
-	}
+	pp = *p;
+	if (pp && leng)
+		r = *leng;
+	if (j == length)
+		j = length = 0;
 
-	*p = j;
+	s = read_buf(inf, buff, &length);
+	if (s == -1 || (s == 0 && length == 0))
+		return (-1);
+
+	cc = _strchr(buff + j, '\n');
+	i = cc ? 1 + (unsigned int)(cc - buff) : length;
+	newP = _realloc(pp, r, r ? r + i : i + 1);
+	if (!newP) /* MALLOC FAILURE! */
+		return (pp ? free(pp), -1 : -1);
+
+	if (r)
+		_strncat(newP, buff + j, i - j);
+	else
+		_strncpy(newP, buff + j, i - j + 1);
+
+	r += j - j;
+	j = i;
+	pp = newP;
+
+	if (leng)
+		*leng = r;
+	*p = pp;
+	return (r);
 }
 
 /**
- * replace_alias - replaces an aliases in the tokenized string
- * @info: the parameter struct
+ * sigintHandler - manages ctrl-C
+ * @sigNum: signal 
  *
- * Return: 1 if replaced, 0 otherwise
+ * Return: nothing
  */
-int replace_alias(info_t *info)
+void sigintHandler(__attribute__((unused))int sigNum)
 {
-	int i;
-	list_t *node;
-	char *p;
-
-	for (i = 0; i < 10; i++)
-	{
-		node = node_starts_with(info->alias, info->argv[0], '=');
-		if (!node)
-			return (0);
-		free(info->argv[0]);
-		p = _strchr(node->str, '=');
-		if (!p)
-			return (0);
-		p = _strdup(p + 1);
-		if (!p)
-			return (0);
-		info->argv[0] = p;
-	}
-	return (1);
-}
-
-/**
- * replace_vars - replaces vars in the tokenized string
- * @info: the parameter struct
- *
- * Return: 1 if replaced, 0 otherwise
- */
-int replace_vars(info_t *info)
-{
-	int i = 0;
-	list_t *node;
-
-	for (i = 0; info->argv[i]; i++)
-	{
-		if (info->argv[i][0] != '$' || !info->argv[i][1])
-			continue;
-
-		if (!_strcmp(info->argv[i], "$?"))
-		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(info->status, 10, 0)));
-			continue;
-		}
-		if (!_strcmp(info->argv[i], "$$"))
-		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(getpid(), 10, 0)));
-			continue;
-		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
-		if (node)
-		{
-			replace_string(&(info->argv[i]),
-				_strdup(_strchr(node->str, '=') + 1));
-			continue;
-		}
-		replace_string(&info->argv[i], _strdup(""));
-
-	}
-	return (0);
-}
-
-/**
- * replace_string - replaces string
- * @old: address of old string
- * @new: new string
- *
- * Return: 1 if replaced, 0 otherwise
- */
-int replace_string(char **old, char *new)
-{
-	free(*old);
-	*old = new;
-	return (1);
+	_puts("\n");
+	_puts("$ ");
+	_putchar(BUFF_FLUSH);
 }
