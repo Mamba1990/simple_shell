@@ -19,7 +19,8 @@ ssize_t input_buf(info_t *inf, char **buff, size_t *length)
 		free(*buff);
 		*buff = NULL;
 		signal(SIGINT, sigintHandler);
-#if USE_GETLINE
+#if _USE_GETLINE
+		
 		a = getline(buff, &len, stdin);
 #else
 		a = _getline(inf, buff, &len);
@@ -112,48 +113,48 @@ ssize_t read_buf(info_t *inf, char *buff, size_t *j)
 /**
  * _getline - gets next line from STDIN
  * @inf: Structure that contains possible args
- * @p: address of pointer to buffer, preallocated or NULL
- * @leng: size of preallocated ptr buffer if not NULL
+ * @ptr: address of pointer to buffer, preallocated or NULL
+ * @length: size of preallocated ptr buffer if not NULL
  *
- * Return: r
+ * Return: s
  */
-int _getline(info_t *inf, char **p, size_t *leng)
+int _getline(info_t *inf, char **ptr, size_t *length)
 {
-	static char buff[READ_BUFF_S];
-	static size_t j, length;
-	size_t i;
-	ssize_t s = 0, r = 0;
-	char *pp = NULL, *newP = NULL, *cc;
+	static char buf[READ_BUFF_S];
+	static size_t i, len;
+	size_t k;
+	ssize_t r = 0, s = 0;
+	char *p = NULL, *new_p = NULL, *c;
 
-	pp = *p;
-	if (pp && leng)
-		r = *leng;
-	if (j == length)
-		j = length = 0;
+	p = *ptr;
+	if (p && length)
+		s = *length;
+	if (i == len)
+		i = len = 0;
 
-	s = read_buf(inf, buff, &length);
-	if (s == -1 || (s == 0 && length == 0))
+	r = read_buf(inf, buf, &len);
+	if (r == -1 || (r == 0 && len == 0))
 		return (-1);
 
-	cc = _strchr(buff + j, '\n');
-	i = cc ? 1 + (unsigned int)(cc - buff) : length;
-	newP = _realloc(pp, r, r ? r + i : i + 1);
-	if (!newP) /* MALLOC FAILURE! */
-		return (pp ? free(pp), -1 : -1);
+	c = _strchr(buf + i, '\n');
+	k = c ? 1 + (unsigned int)(c - buf) : len;
+	new_p = _realloc(p, s, s ? s + k : k + 1);
+	if (!new_p) /* MALLOC FAILURE! */
+		return (p ? free(p), -1 : -1);
 
-	if (r)
-		_strncat(newP, buff + j, i - j);
+	if (s)
+		_strncat(new_p, buf + i, k - i);
 	else
-		_strncpy(newP, buff + j, i - j + 1);
+		_strncpy(new_p, buf + i, k - i + 1);
 
-	r += j - j;
-	j = i;
-	pp = newP;
+	s += k - i;
+	i = k;
+	p = new_p;
 
-	if (leng)
-		*leng = r;
-	*p = pp;
-	return (r);
+	if (length)
+		*length = s;
+	*ptr = p;
+	return (s);
 }
 
 /**

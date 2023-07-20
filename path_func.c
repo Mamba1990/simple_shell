@@ -2,15 +2,15 @@
 /**
  * is_cmd - check  executability of the file as command
  * @inf: structure that contains possible args
- * @_path: path
+ * @path: path
  * Return: 1 success, 0 failure
  */
-int is_cmd(info_t *inf, char *_path)
+int is_cmd(info_t *inf, char *path)
 {
 	struct stat st;
 
 	(void)inf;
-	if (!_path || stat(_path, &st))
+	if (!path || stat(path, &st))
 		return (0);
 
 	if (st.st_mode & S_IFREG)
