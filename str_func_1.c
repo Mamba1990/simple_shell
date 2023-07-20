@@ -8,13 +8,14 @@
  */
 int _strlen(char *s)
 {
-	int length;
+	int j = 0;
 
-	for (length = 0; *s != '\0'; length++)
-	{
-		s++;
-	}
-	return (length);
+	if (!s)
+		return (0);
+
+	while (*s++)
+		j++;
+	return (j);
 }
 
 /**
@@ -38,19 +39,20 @@ int _strcmp(char *str1, char *str2)
 		return (*str1 < *str2 ? -1 : 1);
 }
 
+
 /**
  * starts_with - sees if  starts with str
- * @str: string to be searched
- * @substr: the substring to find
+ * @hay: string to be searched
+ * @nee: the substring to find
  *
  * Return: pointer to the next char of str or NULL
  */
-char *starts_with(const char *str, const char *substr)
+char *starts_with(const char *hay, const char *nee)
 {
-	while (*substr)
-		if (*substr++ != *str++)
+	while (*nee)
+		if (*nee++ != *hay++)
 			return (NULL);
-	return ((char *)str);
+	return ((char *)hay);
 }
 
 /**
@@ -62,19 +64,12 @@ char *starts_with(const char *str, const char *substr)
 */
 char *_strcat(char *dest, char *src)
 {
-	int i = 0;
-	int j = 0;
+	char *r= dest;
 
-	while (*(dest + i) != '\0')
-	{
-		i++;
-	}
-	while (*(src + j) != '\0')
-	{
-		dest[i] = src[j];
-		i++;
-		j++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = *src;
+	return (r);
 }

@@ -46,42 +46,42 @@ char *_strdup(const char *s)
 }
 
 /**
- *_puts - prints an input string
+ *_puts - displays an input string
  *@str: the printed string
  *
  * Return: Nothing
  */
-void _puts(char *s)
+
+void _puts(char *str)
 {
 	int j = 0;
 
-	if (!s)
+	if (!str)
 		return;
-	for ( ;s[j] != '\0'; j++)
+	while (str[j] != '\0')
 	{
-		_putchar(s[j]);
-		
+		_putchar(str[j]);
+		j++;
 	}
 }
 
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
+ * _putchar - writes a char  to stdout
+ * @cc: char to be printed print
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: 1 success -1 failure
  */
-int _putchar(char c)
+int _putchar(char cc)
 {
-	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static int j;
+	static char buff[WRITE_BUFF_S];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (cc == BUFF_FLUSH || j >= WRITE_BUFF_S)
 	{
-		write(1, buf, i);
-		i = 0;
+		write(1, buff, j);
+		j = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	if (cc != BUFF_FLUSH)
+		buff[j++] = cc;
 	return (1);
 }

@@ -9,17 +9,25 @@
 */
 char *_strncpy(char *dest, char *src, int n)
 {
-	int src_length = 0;
+	int j, i;
+	char *ss = dest;
 
-	for ( ; src_length < n && src[src_length] != '\0' ; src_length++)
+	j = 0;
+	while (src[j] != '\0' && j < n - 1)
 	{
-		dest[src_length] = src[src_length];
+		dest[j] = src[j];
+		j++;
 	}
-	for ( ; src_length < n; src_length++)
+	if (j < n)
 	{
-		dest[src_length] = '\0';
+		i = j;
+		while (i < n)
+		{
+			dest[i] = '\0';
+			i++;
+		}
 	}
-	return (dest);
+	return (ss);
 }
 /**
 * _strncat - concatenate two strings
@@ -30,42 +38,36 @@ char *_strncpy(char *dest, char *src, int n)
 */
 char *_strncat(char *dest, char *src, int n)
 {
-	int dest_length = 0;
-	int src_length = 0;
+	int j, i;
+	char *ss = dest;
 
-	while (*(dest + dest_length) != '\0')
+	j = 0;
+	i = 0;
+	while (dest[j] != '\0')
+		j++;
+	while (src[i] != '\0' && i < n)
 	{
-		dest_length++;
+		dest[j] = src[i];
+		j++;
+		i++;
 	}
-	while (src_length < n && *(src + src_length) != '\0')
-	{
-		dest[dest_length] = src[src_length];
-		dest_length++;
-		src_length++;
-	}
-	dest[dest_length] = '\0';
-	return (dest);
+	if (i < n)
+		dest[j] = '\0';
+	return (ss);
 }
 /**
  * _strchr - locates a character in a string.
- * @s:  input string
- * @c:  input char
+ * @ss:  input string
+ * @cc:  input char
  *
  * Return: location of charachter or NULL
  */
-
-char *_strchr(char *s, char c)
+char *_strchr(char *ss, char cc)
 {
-	int j;
+	do {
+		if (*ss == cc)
+			return (ss);
+	} while (*ss++ != '\0');
 
-	j = 0;
-	while (*(s + j) >= '\0')
-	{
-		if (s[j] == c)
-		{
-			return (&s[j]);
-		}
-		j++;
-	}
-return (NULL);
+	return (NULL);
 }

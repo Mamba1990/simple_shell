@@ -25,30 +25,30 @@ char **list_to_strings(list_t *h)
 {
 	list_t *_node = h;
 	size_t j = list_len(h), c;
-	char **s;
+	char **ss;
 	char *str;
 
 	if (!h || !j)
 		return (NULL);
-	s = malloc(sizeof(char *) * (j + 1));
-	if (!s)
+	ss = malloc(sizeof(char *) * (j + 1));
+	if (!ss)
 		return (NULL);
 	for (j = 0; _node; _node = _node->next, j++)
 	{
-		str = malloc(_strlen(node->str) + 1);
+		str = malloc(_strlen(_node->s) + 1);
 		if (!str)
 		{
 			for (c = 0; c < j; c++)
-				free(s[c]);
-			free(s);
+				free(ss[c]);
+			free(ss);
 			return (NULL);
 		}
 
 		str = _strcpy(str, _node->s);
-		s[j] = str;
+		ss[j] = str;
 	}
-	s[j] = NULL;
-	return (s);
+	ss[j] = NULL;
+	return (ss);
 }
 /**
  * print_list - displays elements of a list
@@ -79,7 +79,7 @@ size_t print_list(const list_t *head)
  * @cc: character after prefix
  * Return: node or null
  */
-list_t *node_starts_with(list_t *node, char *pfix, char cc)
+list_t *node_starts_with(list_t *_node, char *pfix, char cc)
 {
 	char *a = NULL;
 

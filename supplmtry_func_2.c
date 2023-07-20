@@ -39,9 +39,9 @@ int _erratoi(char *str)
  */
 void print_error(info_t *inf, char *errs)
 {
-	_eputs(inf->fname);
+	_eputs(inf->f_name);
 	_eputs(": ");
-	print_d(inf->line_count, STDERR_FILENO);
+	print_d(inf->lineCount, STDERR_FILENO);
 	_eputs(": ");
 	_eputs(inf->argv[0]);
 	_eputs(": ");
@@ -104,14 +104,14 @@ char *convert_number(long int number, int b, int flgs)
 	char *p;
 	unsigned long m = number;
 
-	if (!(flgs & CONVERT_UNSIGNED) && number < 0)
+	if (!(flgs & _CONVERT_UNSIGNED) && number < 0)
 	{
 	
 		m = -number;
 		n = '-';
 
 	}
-	arr = flgs & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	arr = flgs & _CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 	p = &buff[49];
 	*p = '\0';
 

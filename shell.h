@@ -20,7 +20,7 @@
 /* The chaining's Command*/
 #define _CMD_NORM	0
 #define _CMD_OR		1
-#define _CMD_AND		2
+#define _CMD_AND	2
 #define _CMD_CHAIN	3
 
 /* To Covert Numbers */
@@ -93,6 +93,7 @@ typedef struct infoPasser
 	int read_fd;
 	int histCount;
 } info_t;
+
 typedef struct builtIn
 {
 	char *type;
@@ -213,6 +214,7 @@ int replace_string(char **ol, char *ne);
 ssize_t input_buf(info_t *inf, char **buff, size_t *length);
 ssize_t get_input(info_t *inf);
 ssize_t read_buff(info_t *inf, char *buff, size_t *j);
+int _getline(info_t *inf, char **p, size_t *leng);
 void sigintHandler(__attribute__((unused))int sigNum);
 
 /* hsh Functions */
