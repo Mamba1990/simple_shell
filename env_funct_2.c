@@ -19,7 +19,7 @@ char **get_environ(info_t *inf)
 /**
  * _unsetenv - deletes the variable's
  * @inf: Structure that contains possible args
- * @var: the prperty of the string env var 
+ * @var: the prperty of the string env var
  */
 int _unsetenv(info_t *inf, char *var)
 {

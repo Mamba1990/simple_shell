@@ -34,7 +34,7 @@ char *_getenv(info_t *inf, const char *name)
 }
 
 /**
- * _mysetenv sets a new environment variable,
+ * _mysetenv - sets a new environment variable,
  *             or adjusts the existing one
  * @inf: Structure that contains possible args
  *  Return: 0

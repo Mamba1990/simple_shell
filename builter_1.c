@@ -9,7 +9,7 @@ int _myexit(info_t *inf)
 {
 	int exitCheck;
 
-	if (inf->argv[1])  
+	if (inf->argv[1])
 	{
 		exitCheck = _erratoi(inf->argv[1]);
 		if (exitCheck == -1)

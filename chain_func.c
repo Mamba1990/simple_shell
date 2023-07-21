@@ -24,9 +24,9 @@ int is_chain(info_t *inf, char *buff, size_t *ptr)
 		k++;
 		inf->cmdBuffType = _CMD_AND;
 	}
-	else if (buff[k] == ';') 
+	else if (buff[k] == ';')
 	{
-		buff[k] = 0; 
+		buff[k] = 0;
 		inf->cmdBuffType = _CMD_CHAIN;
 	}
 	else
@@ -36,7 +36,7 @@ int is_chain(info_t *inf, char *buff, size_t *ptr)
 }
 
 /**
- * check_chain - checks chaining 
+ * check_chain - checks chaining
  * @inf: Structure that contains possible args
  * @buff: buffer
  * @ptr: pointer of actual position
