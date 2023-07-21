@@ -64,7 +64,7 @@ char *starts_with(const char *hay, const char *nee)
 */
 char *_strcat(char *dest, char *src)
 {
-	char *r= dest;
+	char *r = dest;
 
 	while (*dest)
 		dest++;

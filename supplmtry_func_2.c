@@ -12,7 +12,7 @@ int _erratoi(char *str)
 	unsigned long int res = 0;
 
 	if (*str == '+')
-		str++;  
+		str++;
 	j = 0;
 	while (str[j] != '\0')
 	{
@@ -49,7 +49,7 @@ void print_error(info_t *inf, char *errs)
 }
 
 /**
- * print_d - displays a decimal 
+ * print_d - displays a decimal
  * @iput:  parameter
  * @fid: filedescripto
  *
@@ -106,10 +106,8 @@ char *convert_number(long int number, int b, int flgs)
 
 	if (!(flgs & _CONVERT_UNSIGNED) && number < 0)
 	{
-	
 		m = -number;
 		n = '-';
-
 	}
 	arr = flgs & _CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 	p = &buff[49];
@@ -134,6 +132,7 @@ char *convert_number(long int number, int b, int flgs)
 void remove_comments(char *buff)
 {
 	int j;
+
 	j = 0;
 	for ( ; buff[j] != '\0'; j++)
 		if (buff[j] == '#' && (!j || buff[j - 1] == ' '))

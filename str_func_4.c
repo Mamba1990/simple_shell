@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * **strtow - toktenizes a string into words. 
+ * **strtow - toktenizes a string into words
  * @s: the input string
  * @dl: delimeter of string
- * Return: pointer to an array of strings, or NULL 
+ * Return: pointer to an array of strings, or NULL
  */
 
 char **strtow(char *s, char *dl)
@@ -41,7 +41,7 @@ char **strtow(char *s, char *dl)
 			free(str);
 			return (NULL);
 		}
-		for (n= 0; n < k; n++)
+		for (n = 0; n < k; n++)
 			str[j][n] = s[i++];
 		str[j][n] = 0;
 	}
@@ -50,11 +50,10 @@ char **strtow(char *s, char *dl)
 }
 
 /**
- * **strtow2 - toktenizes a string into words.
-
+ * **strtow2 - toktenizes a string into words
  * @s: the input string
  * @dl: the delimeter of a string
- * Return: address of an array of strings, or NULL 
+ * Return: address of an array of strings, or NULL
  */
 char **strtow2(char *s, char dl)
 {

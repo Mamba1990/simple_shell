@@ -55,6 +55,7 @@ int _atoi(char *str)
 {
 	int j, n = 1, flg = 0, oput;
 	unsigned int res = 0;
+
 	j = 0;
 	while (str[j] != '\0' && flg != 2)
 	{
