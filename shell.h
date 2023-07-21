@@ -94,6 +94,11 @@ typedef struct infoPasser
 	int histCount;
 } info_t;
 
+/**
+ *struct builtIn - structures a string and its suitable function
+ *@type: command flag's builtin
+ *@func:  function
+ */
 typedef struct builtIn
 {
 	char *type;
