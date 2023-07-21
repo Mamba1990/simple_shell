@@ -20,7 +20,6 @@ ssize_t input_buf(info_t *inf, char **buff, size_t *length)
 		*buff = NULL;
 		signal(SIGINT, sigintHandler);
 #if _USE_GETLINE
-		
 		a = getline(buff, &len, stdin);
 #else
 		a = _getline(inf, buff, &len);
@@ -159,7 +158,7 @@ int _getline(info_t *inf, char **ptr, size_t *length)
 
 /**
  * sigintHandler - manages ctrl-C
- * @sigNum: signal 
+ * @sigNum: signal
  *
  * Return: nothing
  */

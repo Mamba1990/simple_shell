@@ -40,7 +40,7 @@ char *dup_chars(char *path_str, int _start, int _stop)
 }
 
 /**
- * find_path - localises the command in path 
+ * find_path - localises the command in path
  * @inf:  Structure that contains possible args
  * @path_str: PATH's string
  * @_cmd: command

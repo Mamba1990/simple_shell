@@ -18,7 +18,7 @@ list_t *add_node(list_t **h, const char *s, int number)
 	if (!head)
 		return (NULL);
 	_memset((void *)head, 0, sizeof(list_t));
-	head->number= number;
+	head->number = number;
 	if (s)
 	{
 		head->s = _strdup(s);
@@ -132,7 +132,7 @@ int delete_node_at_index(list_t **h, unsigned int idx)
 }
 
 /**
- * free_list - free nodes 
+ * free_list - free nodes
  * @head_p: pointer of pointer to head node
  * Return: nothing
  */

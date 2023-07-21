@@ -11,7 +11,7 @@
 char *_memset(char *s, char b, unsigned int n)
 {
 	unsigned int j;
-	
+
 	j = 0;
 
 	while (j < n)
@@ -24,7 +24,7 @@ char *_memset(char *s, char b, unsigned int n)
 
 /**
  * ffree - frees a strings
- * @pp: string input
+ * @ss: string input
  * Return: nothing
  */
 void ffree(char **ss)

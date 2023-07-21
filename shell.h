@@ -66,7 +66,7 @@ typedef struct list_str
  *@alias: node of the alias
  *@envChanged: environ changed
  *@status: the return status of the last exec'd command
- *@cmdBuff: pointer of pointer 
+ *@cmdBuff: pointer of pointer
  *@cmdBuffType: && or other command seperator symbols
  *@read_fd: file descriptor to read input
  *@histCount: count if history line number
@@ -205,7 +205,8 @@ int _myalias(info_t *inf);
 
 /* Chain Functions */
 int is_chain(info_t *inf, char *buff, size_t *ptr);
-void check_chain(info_t *inf, char *buff, size_t *ptr, size_t j, size_t length);
+void check_chain(info_t *inf, char *buff, size_t *ptr,
+		size_t j, size_t length);
 int replace_alias(info_t *inf);
 int replace_vars(info_t *inf);
 int replace_string(char **ol, char *ne);
