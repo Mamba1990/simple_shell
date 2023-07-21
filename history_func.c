@@ -50,7 +50,7 @@ int write_history(info_t *inf)
 }
 
 /**
- * read_history - read the file  history 
+ * read_history - read the file history
  * @inf: Structure that contains possible args
  * Return: hisCount success, 0 failure
  */

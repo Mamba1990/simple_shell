@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * clear_info - clears  info_t struct 
+ * clear_info - clears info_t struct
  * @inf: pointer of struct
  */
 void clear_info(info_t *inf)
@@ -46,7 +46,7 @@ void set_info(info_t *inf, char **av)
 
 /**
  * free_info - frees the members of info_t struct
- * @inf: pointer of the  struct 
+ * @inf: pointer of the struct
  * @all_f: returns true if struct members are freed
  */
 void free_info(info_t *inf, int all_f)

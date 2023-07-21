@@ -3,7 +3,7 @@
 /**
  * hsh - main shell loop
  * @inf: Structure that contains possible args
- * @av: argument vector 
+ * @av: argument vector
  *
  * Return: 0 success, 1 failure
  */
@@ -132,7 +132,6 @@ void fork_cmd(info_t *inf)
 	childPid = fork();
 	if (childPid == -1)
 	{
-	
 		perror("Error:");
 		return;
 	}
