@@ -83,7 +83,7 @@ int replace_alias(info_t *inf)
 
 	for (k = 0; k < 10; k++)
 	{
-		_node = node_starts_with(inf->alias, inf->argv[0], '=');
+		_node = nodeStartsWith(inf->alias, inf->argv[0], '=');
 		if (!_node)
 			return (0);
 		free(inf->argv[0]);
@@ -126,7 +126,7 @@ int replace_vars(info_t *inf)
 				_strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
-		_node = node_starts_with(inf->env, &inf->argv[k][1], '=');
+		_node = nodeStartsWith(inf->env, &inf->argv[k][1], '=');
 		if (_node)
 		{
 			replace_string(&(inf->argv[k]),

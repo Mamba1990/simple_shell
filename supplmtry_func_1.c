@@ -6,18 +6,18 @@
  *
  * Return: 1 success, 0 failure
  */
-int interactive(info_t *inf)
+int _interactive(info_t *inf)
 {
 	return (isatty(STDIN_FILENO) && inf->read_fd <= 2);
 }
 
 /**
- * is_delim - checks if a char is a delim
+ * isDelim - checks if a char is a delim
  * @cc: char to be checked
  * @dl: the delimeter string
  * Return: 1 success, 0 faillure
  */
-int is_delim(char cc, char *dl)
+int isDelim(char cc, char *dl)
 {
 	while (*dl)
 		if (*dl++ == cc)

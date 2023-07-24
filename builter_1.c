@@ -42,24 +42,24 @@ int _mycd(info_t *inf)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!inf->argv[1])
 	{
-		_dir = _getenv(inf, "HOME=");
+		_dir = getEnv(inf, "HOME=");
 		if (!_dir)
 			chdirRet =
-				chdir((_dir = _getenv(inf, "PWD=")) ? _dir : "/");
+				chdir((_dir = getEnv(inf, "PWD=")) ? _dir : "/");
 		else
 			chdirRet = chdir(_dir);
 	}
 	else if (_strcmp(inf->argv[1], "-") == 0)
 	{
-		if (!_getenv(inf, "OLDPWD="))
+		if (!getEnv(inf, "OLDPWD="))
 		{
 			_puts(str);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(inf, "OLDPWD=")), _putchar('\n');
+		_puts(getEnv(inf, "OLDPWD=")), _putchar('\n');
 		chdirRet = /* what should this be? */
-			chdir((_dir = _getenv(inf, "OLDPWD=")) ? _dir : "/");
+			chdir((_dir = getEnv(inf, "OLDPWD=")) ? _dir : "/");
 	}
 	else
 		chdirRet = chdir(inf->argv[1]);
@@ -70,8 +70,8 @@ int _mycd(info_t *inf)
 	}
 	else
 	{
-		_setenv(inf, "OLDPWD", _getenv(inf, "PWD="));
-		_setenv(inf, "PWD", getcwd(buff, 1024));
+		setEnv(inf, "OLDPWD", getEnv(inf, "PWD="));
+		setEnv(inf, "PWD", getcwd(buff, 1024));
 	}
 	return (0);
 }

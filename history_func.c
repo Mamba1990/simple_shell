@@ -8,7 +8,7 @@ char *get_history_file(info_t *inf)
 {
 	char *b, *d;
 
-	d = _getenv(inf, "HOME=");
+	d = getEnv(inf, "HOME=");
 	if (!d)
 		return (NULL);
 	b = malloc(sizeof(char) * (_strlen(d) + _strlen(_HIST_FILE) + 2));
@@ -92,7 +92,7 @@ int read_history(info_t *inf)
 	free(b);
 	inf->histCount = lineCount;
 	while (inf->histCount-- >= _HIST_MAX)
-		delete_node_at_index(&(inf->history), 0);
+		nodeDeleterAtIndex(&(inf->history), 0);
 	renumber_history(inf);
 	return (inf->histCount);
 }
@@ -110,7 +110,7 @@ int build_history_list(info_t *inf, char *buff, int lineCount)
 
 	if (inf->history)
 		_node = inf->history;
-	add_node_end(&_node, buff, lineCount);
+	addNodeEnd(&_node, buff, lineCount);
 
 	if (!inf->history)
 		inf->history = _node;

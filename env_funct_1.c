@@ -1,24 +1,24 @@
 #include "shell.h"
 
 /**
- * _myenv - displays the actual environment
+ * myEnv - displays the actual environment
  * @inf: Structure that contains possible args
  * Return: 0
  */
-int _myenv(info_t *inf)
+int myEnv(info_t *inf)
 {
-	print_list_str(inf->env);
+	listStrPrinter(inf->env);
 	return (0);
 }
 
 /**
- * _getenv - gets the environ variable's value
+ * getEnv - gets the environ variable's value
  * @inf: Structure that contains possible args
  * @name: the name of environ variable
  *
  * Return: env's value
  */
-char *_getenv(info_t *inf, const char *name)
+char *getEnv(info_t *inf, const char *name)
 {
 	list_t *_node = inf->env;
 	char *ptr;
@@ -34,29 +34,29 @@ char *_getenv(info_t *inf, const char *name)
 }
 
 /**
- * _mysetenv - sets a new environment variable,
+ * mySetenv - sets a new environment variable,
  *             or adjusts the existing one
  * @inf: Structure that contains possible args
  *  Return: 0
  */
-int _mysetenv(info_t *inf)
+int mySetEnv(info_t *inf)
 {
 	if (inf->argc != 3)
 	{
 		_eputs("Incorrect number of arguements\n");
 		return (1);
 	}
-	if (_setenv(inf, inf->argv[1], inf->argv[2]))
+	if (setEnv(inf, inf->argv[1], inf->argv[2]))
 		return (0);
 	return (1);
 }
 
 /**
- * _myunsetenv - deletes an environment variable
+ * myUnsetEnv - deletes an environment variable
  * @inf: Structure that contains possible args
  *  Return: 0
  */
-int _myunsetenv(info_t *inf)
+int myUnsetEnv(info_t *inf)
 {
 	int j;
 
@@ -66,23 +66,23 @@ int _myunsetenv(info_t *inf)
 		return (1);
 	}
 	for (j = 1; j <= inf->argc; j++)
-		_unsetenv(inf, inf->argv[j]);
+		unsetEnv(inf, inf->argv[j]);
 
 	return (0);
 }
 
 /**
- * populate_env_list - settles environ of thr linked list
+ * envListPopulator - settles environ of thr linked list
  * @inf: Structure that contains possible args.
  * Return: 0
  */
-int populate_env_list(info_t *inf)
+int envListPopulator(info_t *inf)
 {
 	list_t *_node = NULL;
 	size_t j;
 
 	for (j = 0; environ[j]; j++)
-		add_node_end(&_node, environ[j], 0);
+		addNodeEnd(&_node, environ[j], 0);
 	inf->env = _node;
 	return (0);
 }

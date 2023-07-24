@@ -1,15 +1,15 @@
 #include "shell.h"
 
 /**
- * get_environ - get a copy of the string array of the env
+ * getEnviron - get a copy of the string array of the env
  * @inf: Structure that contains possible args
  * Return: 0
  */
-char **get_environ(info_t *inf)
+char **getEnviron(info_t *inf)
 {
 	if (!inf->environ || inf->envChanged)
 	{
-		inf->environ = list_to_strings(inf->env);
+		inf->environ = listToStrings(inf->env);
 		inf->envChanged = 0;
 	}
 
@@ -17,12 +17,12 @@ char **get_environ(info_t *inf)
 }
 
 /**
- * _unsetenv - deletes the variable's
+ * unsetEnv - deletes the variable's
  * @inf: Structure that contains possible args
  * @var: the prperty of the string env var
  * Return: int
  */
-int _unsetenv(info_t *inf, char *var)
+int unsetEnv(info_t *inf, char *var)
 {
 	list_t *_node = inf->env;
 	size_t j = 0;
@@ -36,7 +36,7 @@ int _unsetenv(info_t *inf, char *var)
 		ptr = starts_with(_node->s, var);
 		if (ptr && *ptr == '=')
 		{
-			inf->envChanged = delete_node_at_index(&(inf->env), j);
+			inf->envChanged = nodeDeleterAtIndex(&(inf->env), j);
 			j = 0;
 			_node = inf->env;
 			continue;
@@ -48,13 +48,13 @@ int _unsetenv(info_t *inf, char *var)
 }
 
 /**
- * _setenv - sets a new environment variable,
+ * setEnv - sets a new environment variable,
  * @inf: Structure that contains possible args
  * @var: prperty of the string env var
  * @value: envir value of string
  *  Return: 0
  */
-int _setenv(info_t *inf, char *var, char *value)
+int setEnv(info_t *inf, char *var, char *value)
 {
 	char *buff = NULL;
 	list_t *_node;
@@ -82,7 +82,7 @@ int _setenv(info_t *inf, char *var, char *value)
 		}
 		_node = _node->next;
 	}
-	add_node_end(&(inf->env), buff, 0);
+	addNodeEnd(&(inf->env), buff, 0);
 	free(buff);
 	inf->envChanged = 1;
 	return (0);

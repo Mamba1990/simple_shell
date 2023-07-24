@@ -4,7 +4,7 @@
  * @head: 1st node
  * Return: list's size
  */
-size_t list_len(const list_t *head)
+size_t listLength(const list_t *head)
 {
 	size_t j = 0;
 
@@ -17,14 +17,14 @@ size_t list_len(const list_t *head)
 }
 
 /**
- * list_to_strings - gives array of strings
+ * listToStrings - gives array of strings
  * @h: 1st node
  * Return: strings' array
  */
-char **list_to_strings(list_t *h)
+char **listToStrings(list_t *h)
 {
 	list_t *_node = h;
-	size_t j = list_len(h), c;
+	size_t j = listLength(h), c;
 	char **ss;
 	char *str;
 
@@ -51,11 +51,11 @@ char **list_to_strings(list_t *h)
 	return (ss);
 }
 /**
- * print_list - displays elements of a list
+ * printList - displays elements of a list
  * @head: 1st node
  * Return: list's size
  */
-size_t print_list(const list_t *head)
+size_t printList(const list_t *head)
 {
 	size_t j = 0;
 
@@ -73,13 +73,13 @@ size_t print_list(const list_t *head)
 }
 
 /**
- * node_starts_with - determines node starting with prefix
+ * nodeStartsWith - determines node starting with prefix
  * @_node: list head
  * @pfix: string
  * @cc: character after prefix
  * Return: node or null
  */
-list_t *node_starts_with(list_t *_node, char *pfix, char cc)
+list_t *nodeStartsWith(list_t *_node, char *pfix, char cc)
 {
 	char *a = NULL;
 
@@ -94,12 +94,12 @@ list_t *node_starts_with(list_t *_node, char *pfix, char cc)
 }
 
 /**
- * get_node_index - get node's index
+ * indexNodeGetter - get node's index
  * @h: address of the list head
  * @_node: node
  * Return: node's index or -1
  */
-ssize_t get_node_index(list_t *h, list_t *_node)
+ssize_t indexNodeGetter(list_t *h, list_t *_node)
 {
 	size_t j = 0;
 

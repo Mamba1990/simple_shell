@@ -67,3 +67,19 @@ void *_realloc(void *p, unsigned int oldSize, unsigned int newSize)
 	free(p);
 	return (pt);
 }
+/**
+ * bfree - frees a pointer and NULLs the address
+ * @p: pointer's address to be freed
+ *
+ * Return: 1 success, 0 failure
+ */
+int bfree(void **p)
+{
+	if (p && *p)
+	{
+		free(*p);
+		*p = NULL;
+		return (1);
+	}
+	return (0);
+}

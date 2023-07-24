@@ -24,7 +24,7 @@ void set_info(info_t *inf, char **av)
 	inf->f_name = av[0];
 	if (inf->arg)
 	{
-		inf->argv = strtow(inf->arg, " \t");
+		inf->argv = _strtow(inf->arg, " \t");
 		if (!inf->argv)
 		{
 
@@ -59,11 +59,11 @@ void free_info(info_t *inf, int all_f)
 		if (!inf->cmdBuff)
 			free(inf->arg);
 		if (inf->env)
-			free_list(&(inf->env));
+			freeList(&(inf->env));
 		if (inf->history)
-			free_list(&(inf->history));
+			freeList(&(inf->history));
 		if (inf->alias)
-			free_list(&(inf->alias));
+			freeList(&(inf->alias));
 		ffree(inf->environ);
 			inf->environ = NULL;
 		bfree((void **)inf->cmdBuff);

@@ -121,8 +121,8 @@ int _putchar(char c);
 char *_strncpy(char *dest, char *src, int n);
 char *_strncat(char *dest, char *src, int n);
 char *_strchr(char *s, char c);
-char **strtow(char *s, char *dl);
-char **strtow2(char *s, char dl);
+char **_strtow(char *s, char *dl);
+char **_strtow_2(char *s, char dl);
 
 /* Memory Functions */
 char *_memset(char *s, char b, unsigned int n);
@@ -132,24 +132,25 @@ int bfree(void **p);
 
 /* Supplumentary Functions */
 
-int interactive(info_t *inf);
-int is_delim(char cc, char *dl);
+int _interactive(info_t *inf);
+int isDelim(char cc, char *dl);
 int _isalpha(int c);
 int _atoi(char *str);
 
 /* Linked Lists Functions */
+
 /* 1 */
-list_t *add_node(list_t **h, const char *s, int number);
-list_t *add_node_end(list_t **h, const char *s, int number);
-size_t print_list_str(const list_t *head);
-int delete_node_at_index(list_t **h, unsigned int idx);
-void free_list(list_t **head_p);
+list_t *addNodeEnd(list_t **h, const char *s, int number);
+size_t listStrPrinter(const list_t *head);
+int nodeDeleterAtIndex(list_t **h, unsigned int idx);
+void freeList(list_t **head_p);
+
 /* 2 */
-size_t list_len(const list_t *head);
-char **list_to_strings(list_t *h);
-size_t print_list(const list_t *head);
-list_t *node_starts_with(list_t *node, char *pfix, char cc);
-ssize_t get_node_index(list_t *h, list_t *_node);
+size_t listLength(const list_t *head);
+char **listToStrings(list_t *h);
+size_t printList(const list_t *head);
+list_t *nodeStartsWith(list_t *node, char *pfix, char cc);
+ssize_t indexNodeGetter(list_t *h, list_t *_node);
 
 /* Errors Functions */
 /* 1 */
@@ -172,15 +173,15 @@ void free_info(info_t *inf, int all_f);
 
 /* Environ Functions */
 /* 1 */
-int _myenv(info_t *inf);
-char *_getenv(info_t *inf, const char *name);
-int _mysetenv(info_t *inf);
-int _myunsetenv(info_t *inf);
-int populate_env_list(info_t *inf);
+int myEnv(info_t *inf);
+char *getEnv(info_t *inf, const char *name);
+int mySetEnv(info_t *inf);
+int myUnsetEnv(info_t *inf);
+int envListPopulator(info_t *inf);
 /* 2 */
-char **get_environ(info_t *inf);
-int _unsetenv(info_t *inf, char *var);
-int _setenv(info_t *inf, char *var, char *value);
+char **getEnviron(info_t *inf);
+int unsetEnv(info_t *inf, char *var);
+int setEnv(info_t *inf, char *var, char *value);
 
 /* History Functions */
 char *get_history_file(info_t *inf);
@@ -224,7 +225,7 @@ int _getline(info_t *inf, char **p, size_t *leng);
 void sigintHandler(__attribute__((unused))int sigNum);
 
 /* hsh Functions */
-int hsh(info_t *inf, char **av);
+int _hsh(info_t *inf, char **av);
 int find_builtin(info_t *inf);
 void find_cmd(info_t *inf);
 void fork_cmd(info_t *inf);

@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * hsh - main shell loop
+ * _hsh - main shell loop
  * @inf: Structure that contains possible args
  * @av: argument vector
  *
  * Return: 0 success, 1 failure
  */
-int hsh(info_t *inf, char **av)
+int _hsh(info_t *inf, char **av)
 {
 	ssize_t s = 0;
 	int builtinR = 0;
@@ -15,7 +15,7 @@ int hsh(info_t *inf, char **av)
 	while (s != -1 && builtinR != -2)
 	{
 		clear_info(inf);
-		if (interactive(inf))
+		if (_interactive(inf))
 			_puts("$ ");
 		_eputchar(BUFF_FLUSH);
 		s = get_input(inf);
@@ -26,13 +26,13 @@ int hsh(info_t *inf, char **av)
 			if (builtinR == -1)
 				find_cmd(inf);
 		}
-		else if (interactive(inf))
+		else if (_interactive(inf))
 			_putchar('\n');
 		free_info(inf, 0);
 	}
 	write_history(inf);
 	free_info(inf, 1);
-	if (!interactive(inf) && inf->status)
+	if (!_interactive(inf) && inf->status)
 		exit(inf->status);
 	if (builtinR == -2)
 	{
@@ -57,11 +57,11 @@ int find_builtin(info_t *inf)
 	int j, builtInR = -1;
 	builtinTable builtin_tbl[] = {
 		{"exit", _myexit},
-		{"env", _myenv},
+		{"env", myEnv},
 		{"help", _myhelp},
 		{"history", _myhistory},
-		{"setenv", _mysetenv},
-		{"unsetenv", _myunsetenv},
+		{"setenv", mySetEnv},
+		{"unsetenv", myUnsetEnv},
 		{"cd", _mycd},
 		{"alias", _myalias},
 		{NULL, NULL}
@@ -95,12 +95,12 @@ void find_cmd(info_t *inf)
 		inf->lineCountFlag = 0;
 	}
 	for (j = 0, l = 0; inf->arg[j]; j++)
-		if (!is_delim(inf->arg[j], " \t\n"))
+		if (!isDelim(inf->arg[j], " \t\n"))
 			l++;
 	if (!l)
 		return;
 
-	_path = find_path(inf, _getenv(inf, "PATH="), inf->argv[0]);
+	_path = find_path(inf, getEnv(inf, "PATH="), inf->argv[0]);
 	if (_path)
 	{
 		inf->path = _path;
@@ -108,7 +108,7 @@ void find_cmd(info_t *inf)
 	}
 	else
 	{
-		if ((interactive(inf) || _getenv(inf, "PATH=")
+		if ((_interactive(inf) || getEnv(inf, "PATH=")
 			|| inf->argv[0][0] == '/') && is_cmd(inf, inf->argv[0]))
 			fork_cmd(inf);
 		else if (*(inf->arg) != '\n')
@@ -137,14 +137,13 @@ void fork_cmd(info_t *inf)
 	}
 	if (childPid == 0)
 	{
-		if (execve(inf->path, inf->argv, get_environ(inf)) == -1)
+		if (execve(inf->path, inf->argv, getEnviron(inf)) == -1)
 		{
 			free_info(inf, 1);
 			if (errno == EACCES)
 				exit(126);
 			exit(1);
 		}
-		/* TODO: PUT ERROR FUNCTION */
 	}
 	else
 	{
