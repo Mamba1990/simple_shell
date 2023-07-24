@@ -1,10 +1,10 @@
 #include "shell.h"
 /**
- * get_history_file - returns file's
+ * fileHistoryGetter - returns file's
  * @inf: Structure that contains possible args
  * Return: string that contains the file history
  */
-char *get_history_file(info_t *inf)
+char *fileHistoryGetter(info_t *inf)
 {
 	char *b, *d;
 
@@ -22,14 +22,14 @@ char *get_history_file(info_t *inf)
 }
 
 /**
- * write_history - create a file or adjusts the one that exixts
+ * historyWriter - create a file or adjusts the one that exixts
  * @inf: Structure that contains possible args
  * Return: 1 success, -1  failure
  */
-int write_history(info_t *inf)
+int historyWriter(info_t *inf)
 {
 	ssize_t f;
-	char *fname = get_history_file(inf);
+	char *fname = fileHistoryGetter(inf);
 	list_t *_node = NULL;
 
 	if (!fname)
@@ -50,16 +50,16 @@ int write_history(info_t *inf)
 }
 
 /**
- * read_history - read the file history
+ * historyReader - read the file history
  * @inf: Structure that contains possible args
  * Return: hisCount success, 0 failure
  */
-int read_history(info_t *inf)
+int historyReader(info_t *inf)
 {
 	int j, _last = 0, lineCount = 0;
 	ssize_t f, _rdlen, _fsize = 0;
 	struct stat _st;
-	char *b = NULL, *fname = get_history_file(inf);
+	char *b = NULL, *fname = fileHistoryGetter(inf);
 
 	if (!fname)
 		return (0);
@@ -84,27 +84,27 @@ int read_history(info_t *inf)
 		if (b[j] == '\n')
 		{
 			b[j] = 0;
-			build_history_list(inf, b + _last, lineCount++);
+			buildHistoryList(inf, b + _last, lineCount++);
 			_last = j + 1;
 		}
 	if (_last != j)
-		build_history_list(inf, b + _last, lineCount++);
+		buildHistoryList(inf, b + _last, lineCount++);
 	free(b);
 	inf->histCount = lineCount;
 	while (inf->histCount-- >= _HIST_MAX)
 		nodeDeleterAtIndex(&(inf->history), 0);
-	renumber_history(inf);
+	renumberHistory(inf);
 	return (inf->histCount);
 }
 
 /**
- * build_history_list - adds history's entry linked list
+ * buildHistoryList - adds history's entry linked list
  * @inf: Structure that contains possible args
  * @buff: mem block
  * @lineCount: integer
  * Return: 0
  */
-int build_history_list(info_t *inf, char *buff, int lineCount)
+int buildHistoryList(info_t *inf, char *buff, int lineCount)
 {
 	list_t *_node = NULL;
 
@@ -118,11 +118,11 @@ int build_history_list(info_t *inf, char *buff, int lineCount)
 }
 
 /**
- * renumber_history - gives a number to the history list
+ * renumberHistory - gives a number to the history list
  * @inf: Structure that contains possible args
  * Return: integer
  */
-int renumber_history(info_t *inf)
+int renumberHistory(info_t *inf)
 {
 	list_t *_node = inf->history;
 	int j = 0;

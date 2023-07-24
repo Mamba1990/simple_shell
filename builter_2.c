@@ -1,24 +1,24 @@
 #include "shell.h"
 
 /**
- * _myhistory - prints th list's history
+ * myHistory - prints th list's history
  * @inf: Structure that contains possible args
  *  Return: 0
  */
-int _myhistory(info_t *inf)
+int myHistory(info_t *inf)
 {
 	printList(inf->history);
 	return (0);
 }
 
 /**
- * unset_alias - unsets alias to a str
+ * unsetAlias - unsets alias to a str
  * @inf: Structure that contains possible args
  * @_str: string input
  *
  * Return:  0 success, 1 faillure
  */
-int unset_alias(info_t *inf, char *_str)
+int unsetAlias(info_t *inf, char *_str)
 {
 	char *ptr, ch;
 	int r;
@@ -35,13 +35,13 @@ int unset_alias(info_t *inf, char *_str)
 }
 
 /**
- * set_alias - gives alias to string
+ * aliasSetter - gives alias to string
  * @inf: Structure that contains possible args
  * @_str: string input
  *
  * Return: 0 success, 1 faillure
  */
-int set_alias(info_t *inf, char *_str)
+int aliasSetter(info_t *inf, char *_str)
 {
 	char *ptr;
 
@@ -49,19 +49,19 @@ int set_alias(info_t *inf, char *_str)
 	if (!ptr)
 		return (1);
 	if (!*++ptr)
-		return (unset_alias(inf, _str));
+		return (unsetAlias(inf, _str));
 
-	unset_alias(inf, _str);
+	unsetAlias(inf, _str);
 	return (addNodeEnd(&(inf->alias), _str, 0) == NULL);
 }
 
 /**
- * print_alias - displays string's alias
+ * aliasPrinter - displays string's alias
  * @_node: node's alias
  *
  * Return: 0 on success, 1 failure
  */
-int print_alias(list_t *_node)
+int aliasPrinter(list_t *_node)
 {
 	char *ptr = NULL, *als = NULL;
 
@@ -79,11 +79,11 @@ int print_alias(list_t *_node)
 }
 
 /**
- * _myalias - man alias
+ * myAlias - man alias
  * @inf: Structure that contains possible args
  *  Return: 0
  */
-int _myalias(info_t *inf)
+int myAlias(info_t *inf)
 {
 	int j = 0;
 	char *ptr = NULL;
@@ -94,7 +94,7 @@ int _myalias(info_t *inf)
 		_node = inf->alias;
 		while (_node)
 		{
-			print_alias(_node);
+			aliasPrinter(_node);
 			_node = _node->next;
 		}
 		return (0);
@@ -103,9 +103,9 @@ int _myalias(info_t *inf)
 	{
 		ptr = _strchr(inf->argv[j], '=');
 		if (ptr)
-			set_alias(inf, inf->argv[j]);
+			aliasSetter(inf, inf->argv[j]);
 		else
-			print_alias(nodeStartsWith(inf->alias, inf->argv[j], '='));
+			aliasPrinter(nodeStartsWith(inf->alias, inf->argv[j], '='));
 	}
 
 	return (0);

@@ -1,11 +1,11 @@
 #include "shell.h"
 /**
- * is_cmd - check  executability of the file as command
+ * isCommd - check  executability of the file as command
  * @inf: structure that contains possible args
  * @path: path
  * Return: 1 success, 0 failure
  */
-int is_cmd(info_t *inf, char *path)
+int isCommd(info_t *inf, char *path)
 {
 	struct stat st;
 
@@ -21,13 +21,13 @@ int is_cmd(info_t *inf, char *path)
 }
 
 /**
- * dup_chars - gives a duplication to characters
+ * charsDuplicator - gives a duplication to characters
  * @path_str: string's path
  * @_start: debut of index
  * @_stop:  end of index
  * Return: address of the duplicated character
  */
-char *dup_chars(char *path_str, int _start, int _stop)
+char *charsDuplicator(char *path_str, int _start, int _stop)
 {
 	static char buff[1024];
 	int j = 0, c = 0;
@@ -40,13 +40,13 @@ char *dup_chars(char *path_str, int _start, int _stop)
 }
 
 /**
- * find_path - localises the command in path
+ * pathFinder - localises the command in path
  * @inf:  Structure that contains possible args
  * @path_str: PATH's string
  * @_cmd: command
  * Return: path of command or NULL
  */
-char *find_path(info_t *inf, char *path_str, char *_cmd)
+char *pathFinder(info_t *inf, char *path_str, char *_cmd)
 {
 	int j = 0, currPos = 0;
 	char *_path;
@@ -55,14 +55,14 @@ char *find_path(info_t *inf, char *path_str, char *_cmd)
 		return (NULL);
 	if ((_strlen(_cmd) > 2) && starts_with(_cmd, "./"))
 	{
-		if (is_cmd(inf, _cmd))
+		if (isCommd(inf, _cmd))
 			return (_cmd);
 	}
 	while (1)
 	{
 		if (!path_str[j] || path_str[j] == ':')
 		{
-			_path = dup_chars(path_str, currPos, j);
+			_path = charsDuplicator(path_str, currPos, j);
 			if (!*_path)
 				_strcat(_path, _cmd);
 			else
@@ -70,7 +70,7 @@ char *find_path(info_t *inf, char *path_str, char *_cmd)
 				_strcat(_path, "/");
 				_strcat(_path, _cmd);
 			}
-			if (is_cmd(inf, _path))
+			if (isCommd(inf, _path))
 				return (_path);
 			if (!path_str[j])
 				break;

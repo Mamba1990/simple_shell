@@ -184,16 +184,16 @@ int unsetEnv(info_t *inf, char *var);
 int setEnv(info_t *inf, char *var, char *value);
 
 /* History Functions */
-char *get_history_file(info_t *inf);
-int write_history(info_t *inf);
-int read_history(info_t *inf);
-int build_history_list(info_t *inf, char *buff, int lineCount);
-int renumber_history(info_t *inf);
+char *fileHistoryGetter(info_t *inf);
+int historyWriter(info_t *inf);
+int historyReader(info_t *inf);
+int buildHistoryList(info_t *inf, char *buff, int lineCount);
+int renumberHistory(info_t *inf);
 
 /* Path Functions */
-int is_cmd(info_t *inf, char *_path);
-char *dup_chars(char *path_str, int _start, int _stop);
-char *find_path(info_t *inf, char *path_str, char *_cmd);
+int isCommd(info_t *inf, char *_path);
+char *charsDuplicator(char *path_str, int _start, int _stop);
+char *pathFinder(info_t *inf, char *path_str, char *_cmd);
 
 /* Builters Functions */
 
@@ -203,11 +203,11 @@ int _mycd(info_t *inf);
 int _myhelp(info_t *inf);
 
 /* 2 */
-int _myhistory(info_t *inf);
-int unset_alias(info_t *inf, char *_str);
-int set_alias(info_t *inf, char *_str);
-int print_alias(list_t *_node);
-int _myalias(info_t *inf);
+int myHistory(info_t *inf);
+int unsetAlias(info_t *inf, char *_str);
+int aliasSetter(info_t *inf, char *_str);
+int aliasPrinter(list_t *_node);
+int myAlias(info_t *inf);
 
 /* Chain Functions */
 int is_chain(info_t *inf, char *buff, size_t *ptr);
@@ -218,17 +218,17 @@ int replace_vars(info_t *inf);
 int replace_string(char **ol, char *ne);
 
 /* Line Getter Functions */
-ssize_t input_buf(info_t *inf, char **buff, size_t *length);
-ssize_t get_input(info_t *inf);
-ssize_t read_buff(info_t *inf, char *buff, size_t *j);
-int _getline(info_t *inf, char **p, size_t *leng);
+ssize_t inputBuff(info_t *inf, char **buff, size_t *length);
+ssize_t inputGetter(info_t *inf);
+ssize_t buffReader(info_t *inf, char *buff, size_t *j);
+int _getline_(info_t *inf, char **p, size_t *leng);
 void sigintHandler(__attribute__((unused))int sigNum);
 
 /* hsh Functions */
-int _hsh(info_t *inf, char **av);
-int find_builtin(info_t *inf);
-void find_cmd(info_t *inf);
-void fork_cmd(info_t *inf);
+int _hsh_(info_t *inf, char **av);
+int builtinfinder(info_t *inf);
+void cmdFinder(info_t *inf);
+void forkComd(info_t *inf);
 
 
 #endif

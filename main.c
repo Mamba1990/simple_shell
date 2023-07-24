@@ -38,7 +38,7 @@ int main(int ac, char **av)
 		inf->read_fd = f;
 	}
 	envListPopulator(inf);
-	read_history(inf);
-	_hsh(inf, av);
+	historyReader(inf);
+	_hsh_(inf, av);
 	return (EXIT_SUCCESS);
 }

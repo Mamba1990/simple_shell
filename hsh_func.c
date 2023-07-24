@@ -1,13 +1,13 @@
 #include "shell.h"
 
-/**
- * _hsh - main shell loop
+/**i
+ * _hsh_ - main shell loop
  * @inf: Structure that contains possible args
  * @av: argument vector
  *
  * Return: 0 success, 1 failure
  */
-int _hsh(info_t *inf, char **av)
+int _hsh_(info_t *inf, char **av)
 {
 	ssize_t s = 0;
 	int builtinR = 0;
@@ -18,19 +18,19 @@ int _hsh(info_t *inf, char **av)
 		if (_interactive(inf))
 			_puts("$ ");
 		_eputchar(BUFF_FLUSH);
-		s = get_input(inf);
+		s = inputGetter(inf);
 		if (s != -1)
 		{
 			set_info(inf, av);
-			builtinR = find_builtin(inf);
+			builtinR = builtinfinder(inf);
 			if (builtinR == -1)
-				find_cmd(inf);
+				cmdFinder(inf);
 		}
 		else if (_interactive(inf))
 			_putchar('\n');
 		free_info(inf, 0);
 	}
-	write_history(inf);
+	historyWriter(inf);
 	free_info(inf, 1);
 	if (!_interactive(inf) && inf->status)
 		exit(inf->status);
@@ -44,7 +44,7 @@ int _hsh(info_t *inf, char **av)
 }
 
 /**
- * find_builtin - finds the builtin cmd
+ * builtinfinder - finds the builtin cmd
  * @inf: Structure that contains possible args
  *
  * Return: -1 if not found,
@@ -52,18 +52,18 @@ int _hsh(info_t *inf, char **av)
  *	    1 if builtin found, no success,
  *	    -2 if signals exiting
  */
-int find_builtin(info_t *inf)
+int builtinfinder(info_t *inf)
 {
 	int j, builtInR = -1;
 	builtinTable builtin_tbl[] = {
 		{"exit", _myexit},
 		{"env", myEnv},
 		{"help", _myhelp},
-		{"history", _myhistory},
+		{"history", myHistory},
 		{"setenv", mySetEnv},
 		{"unsetenv", myUnsetEnv},
 		{"cd", _mycd},
-		{"alias", _myalias},
+		{"alias", myAlias},
 		{NULL, NULL}
 	};
 
@@ -78,12 +78,12 @@ int find_builtin(info_t *inf)
 }
 
 /**
- * find_cmd - finds the path cmd
+ * cmdFinder - finds the path cmd
  * @inf: Structure that contains possible args
  *
  * Return: nothing
  */
-void find_cmd(info_t *inf)
+void cmdFinder(info_t *inf)
 {
 	char *_path = NULL;
 	int j, l;
@@ -100,17 +100,17 @@ void find_cmd(info_t *inf)
 	if (!l)
 		return;
 
-	_path = find_path(inf, getEnv(inf, "PATH="), inf->argv[0]);
+	_path = pathFinder(inf, getEnv(inf, "PATH="), inf->argv[0]);
 	if (_path)
 	{
 		inf->path = _path;
-		fork_cmd(inf);
+		forkComd(inf);
 	}
 	else
 	{
 		if ((_interactive(inf) || getEnv(inf, "PATH=")
-			|| inf->argv[0][0] == '/') && is_cmd(inf, inf->argv[0]))
-			fork_cmd(inf);
+			|| inf->argv[0][0] == '/') && isCommd(inf, inf->argv[0]))
+			forkComd(inf);
 		else if (*(inf->arg) != '\n')
 		{
 			inf->status = 127;
@@ -120,12 +120,12 @@ void find_cmd(info_t *inf)
 }
 
 /**
- * fork_cmd - forks  exec thread that runs command
+ * forkComd - forks  exec thread that runs command
  * @inf: Structure that contains possible args
  *
  * Return: nothing
  */
-void fork_cmd(info_t *inf)
+void forkComd(info_t *inf)
 {
 	pid_t childPid;
 
