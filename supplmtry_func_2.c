@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * _erratoi - convertion of a string to an integer
+ * _erratoi_ - convertion of a string to an integer
  * @str: tring to convert
  * Return: 0  numbers found, converted number if not
  * -1 error
  */
-int _erratoi(char *str)
+int _erratoi_(char *str)
 {
 	int j = 0;
 	unsigned long int res = 0;
@@ -31,38 +31,38 @@ int _erratoi(char *str)
 }
 
 /**
- * print_error - displays an error message
+ * errorPrinter - displays an error message
  * @inf: info struct
  * @errs: string that contains the error type
  * Return: 0 no numbers faound in string, converted number if not
  * -1 error
  */
-void print_error(info_t *inf, char *errs)
+void errorPrinter(info_t *inf, char *errs)
 {
-	_eputs(inf->f_name);
-	_eputs(": ");
-	print_d(inf->lineCount, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(inf->argv[0]);
-	_eputs(": ");
-	_eputs(errs);
+	_eputs_(inf->f_name);
+	_eputs_(": ");
+	dPrinter(inf->lineCount, STDERR_FILENO);
+	_eputs_(": ");
+	_eputs_(inf->argv[0]);
+	_eputs_(": ");
+	_eputs_(errs);
 }
 
 /**
- * print_d - displays a decimal
+ * dPrinter - displays a decimal
  * @iput:  parameter
  * @fid: filedescripto
  *
  * Return: chars printed
  */
-int print_d(int iput, int fid)
+int dPrinter(int iput, int fid)
 {
 	int (*__putchar)(char) = _putchar;
 	int j, cnt = 0;
 	unsigned int abso, crrt;
 
 	if (fid == STDERR_FILENO)
-		__putchar = _eputchar;
+		__putchar = _eputchar_;
 	if (iput < 0)
 	{
 		abso = -iput;
@@ -89,14 +89,14 @@ int print_d(int iput, int fid)
 }
 
 /**
- * convert_number - converts a number
+ * numberConverter - converts a number
  * @number: input
  * @b: input
  * @flgs: input
  *
  * Return: pointer to a strinf
  */
-char *convert_number(long int number, int b, int flgs)
+char *numberConverter(long int number, int b, int flgs)
 {
 	static char *arr;
 	static char buff[50];
@@ -124,12 +124,12 @@ char *convert_number(long int number, int b, int flgs)
 }
 
 /**
- * remove_comments - deletes comments
+ * removeComment - deletes comments
  * @buff: pouinter the string to be modified
  *
  * Return: 0
  */
-void remove_comments(char *buff)
+void removeComment(char *buff)
 {
 	int j;
 

@@ -32,7 +32,7 @@ ssize_t inputBuff(info_t *inf, char **buff, size_t *length)
 				a--;
 			}
 			inf->lineCountFlag = 1;
-			remove_comments(*buff);
+			removeComment(*buff);
 			buildHistoryList(inf, *buff, inf->histCount++);
 			/* if (_strchr(*buf, ';')) is this a command chain? */
 			{
@@ -52,41 +52,41 @@ ssize_t inputBuff(info_t *inf, char **buff, size_t *length)
  */
 ssize_t inputGetter(info_t *inf)
 {
-	static char *buff; /* the ';' command chain buffer */
+	static char *buff;
 	static size_t j, k, length;
 	ssize_t a = 0;
 	char **buffP = &(inf->arg), *ptr;
 
 	_putchar(BUFF_FLUSH);
 	a = inputBuff(inf, &buff, &length);
-	if (a == -1) /* EOF */
+	if (a == -1)
 		return (-1);
-	if (length)	/* we have commands left in the chain buffer */
+	if (length)
 	{
-		k = j; /* init new iterator to current buf position */
-		ptr = buff + j; /* get pointer for return */
+		k = j;
+		ptr = buff + j;
 
 		check_chain(inf, buff, &k, j, length);
-		while (k < length) /* iterate to semicolon or end */
+		while (k < length)
 		{
 			if (is_chain(inf, buff, &k))
 				break;
 			k++;
 		}
 
-		j = k + 1; /* increment past nulled ';'' */
-		if (j >= length) /* reached end of buffer? */
+		j = k + 1;
+		if (j >= length)
 		{
-			j = length = 0; /* reset position and length */
+			j = length = 0;
 			inf->cmdBuffType = _CMD_NORM;
 		}
 
-		*buffP = ptr; /* pass back pointer to current command position */
-		return (_strlen(ptr)); /* return length of current command */
+		*buffP = ptr;
+		return (_strlen(ptr));
 	}
 
-	*buffP = buff; /* else not a chain, pass back buffer from _getline() */
-	return (a); /* return length of buffer from _getline() */
+	*buffP = buff;
+	return (a);
 }
 
 /**
@@ -123,7 +123,7 @@ int _getline_(info_t *inf, char **ptr, size_t *length)
 	static size_t i, len;
 	size_t k;
 	ssize_t r = 0, s = 0;
-	char *p = NULL, *new_p = NULL, *c;
+	char *p = NULL, *newP = NULL, *c;
 
 	p = *ptr;
 	if (p && length)
@@ -137,18 +137,18 @@ int _getline_(info_t *inf, char **ptr, size_t *length)
 
 	c = _strchr(buf + i, '\n');
 	k = c ? 1 + (unsigned int)(c - buf) : len;
-	new_p = _realloc(p, s, s ? s + k : k + 1);
-	if (!new_p) /* MALLOC FAILURE! */
+	newP = _realloc(p, s, s ? s + k : k + 1);
+	if (!newP)
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		_strncat(new_p, buf + i, k - i);
+		_strncat(newP, buf + i, k - i);
 	else
-		_strncpy(new_p, buf + i, k - i + 1);
+		_strncpy(newP, buf + i, k - i + 1);
 
 	s += k - i;
 	i = k;
-	p = new_p;
+	p = newP;
 
 	if (length)
 		*length = s;

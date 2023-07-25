@@ -41,10 +41,10 @@ int historyWriter(info_t *inf)
 		return (-1);
 	for (_node = inf->history; _node; _node = _node->next)
 	{
-		_putsfd(_node->s, f);
-		_putfd('\n', f);
+		_putsfd_(_node->s, f);
+		_putfd_('\n', f);
 	}
-	_putfd(BUFF_FLUSH, f);
+	_putfd_(BUFF_FLUSH, f);
 	close(f);
 	return (1);
 }

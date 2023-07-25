@@ -1,26 +1,26 @@
 #include "shell.h"
 
 /**
- * _myexit - exits the shell
+ * myExit - exits the shell
  * @inf:  Structure that contains possible args
  *  Return: integer
  */
-int _myexit(info_t *inf)
+int myExit(info_t *inf)
 {
 	int exitCheck;
 
 	if (inf->argv[1])
 	{
-		exitCheck = _erratoi(inf->argv[1]);
+		exitCheck = _erratoi_(inf->argv[1]);
 		if (exitCheck == -1)
 		{
 			inf->status = 2;
-			print_error(inf, "Illegal number: ");
-			_eputs(inf->argv[1]);
-			_eputchar('\n');
+			errorPrinter(inf, "Illegal number: ");
+			_eputs_(inf->argv[1]);
+			_eputchar_('\n');
 			return (1);
 		}
-		inf->errNum = _erratoi(inf->argv[1]);
+		inf->errNum = _erratoi_(inf->argv[1]);
 		return (-2);
 	}
 	inf->errNum = -1;
@@ -28,11 +28,11 @@ int _myexit(info_t *inf)
 }
 
 /**
- * _mycd - changes the working directory
+ * myCd - changes the working directory
  * @inf: Structure that contains possible args
  *  Return: 0
  */
-int _mycd(info_t *inf)
+int myCd(info_t *inf)
 {
 	char *str, *_dir, buff[1024];
 	int chdirRet;
@@ -58,15 +58,15 @@ int _mycd(info_t *inf)
 			return (1);
 		}
 		_puts(getEnv(inf, "OLDPWD=")), _putchar('\n');
-		chdirRet = /* what should this be? */
+		chdirRet =
 			chdir((_dir = getEnv(inf, "OLDPWD=")) ? _dir : "/");
 	}
 	else
 		chdirRet = chdir(inf->argv[1]);
 	if (chdirRet == -1)
 	{
-		print_error(inf, "can't cd to ");
-		_eputs(inf->argv[1]), _eputchar('\n');
+		errorPrinter(inf, "can't cd to ");
+		_eputs_(inf->argv[1]), _eputchar_('\n');
 	}
 	else
 	{
@@ -77,11 +77,11 @@ int _mycd(info_t *inf)
 }
 
 /**
- * _myhelp - helps changing the working dir
+ * myHelper - helps changing the working dir
  * @inf: Structure that contains possible args
  *  Return: 0
  */
-int _myhelp(info_t *inf)
+int myHelper(info_t *inf)
 {
 	char **argArray;
 

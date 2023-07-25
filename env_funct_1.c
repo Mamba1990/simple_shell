@@ -34,7 +34,7 @@ char *getEnv(info_t *inf, const char *name)
 }
 
 /**
- * mySetenv - sets a new environment variable,
+ * mySetEnv - sets a new environment variable,
  *             or adjusts the existing one
  * @inf: Structure that contains possible args
  *  Return: 0
@@ -43,7 +43,7 @@ int mySetEnv(info_t *inf)
 {
 	if (inf->argc != 3)
 	{
-		_eputs("Incorrect number of arguements\n");
+		_eputs_("Incorrect number of arguements\n");
 		return (1);
 	}
 	if (setEnv(inf, inf->argv[1], inf->argv[2]))
@@ -62,7 +62,7 @@ int myUnsetEnv(info_t *inf)
 
 	if (inf->argc == 1)
 	{
-		_eputs("Too few arguements.\n");
+		_eputs_("Too few arguements.\n");
 		return (1);
 	}
 	for (j = 1; j <= inf->argc; j++)

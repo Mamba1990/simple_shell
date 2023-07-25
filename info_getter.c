@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * clear_info - clears info_t struct
+ * clearInfo - clears info_t struct
  * @inf: pointer of struct
  */
-void clear_info(info_t *inf)
+void clearInfo(info_t *inf)
 {
 	inf->arg = NULL;
 	inf->argv = NULL;
@@ -13,11 +13,11 @@ void clear_info(info_t *inf)
 }
 
 /**
- * set_info - gives an initialization to info_t struct
+ * infoSetter - gives an initialization to info_t struct
  * @inf: pointer of struct
  * @av: argument vector
  */
-void set_info(info_t *inf, char **av)
+void infoSetter(info_t *inf, char **av)
 {
 	int j = 0;
 
@@ -45,13 +45,13 @@ void set_info(info_t *inf, char **av)
 }
 
 /**
- * free_info - frees the members of info_t struct
+ * freeInfo - frees the members of info_t struct
  * @inf: pointer of the struct
  * @all_f: returns true if struct members are freed
  */
-void free_info(info_t *inf, int all_f)
+void freeInfo(info_t *inf, int all_f)
 {
-	ffree(inf->argv);
+	f_free(inf->argv);
 	inf->argv = NULL;
 	inf->path = NULL;
 	if (all_f)
@@ -64,9 +64,9 @@ void free_info(info_t *inf, int all_f)
 			freeList(&(inf->history));
 		if (inf->alias)
 			freeList(&(inf->alias));
-		ffree(inf->environ);
+		f_free(inf->environ);
 			inf->environ = NULL;
-		bfree((void **)inf->cmdBuff);
+		b_free((void **)inf->cmdBuff);
 		if (inf->read_fd > 2)
 			close(inf->read_fd);
 		_putchar(BUFF_FLUSH);

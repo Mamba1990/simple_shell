@@ -23,11 +23,11 @@ char *_memset(char *s, char b, unsigned int n)
 }
 
 /**
- * ffree - frees a strings
+ * f_free - frees a strings
  * @ss: string input
  * Return: nothing
  */
-void ffree(char **ss)
+void f_free(char **ss)
 {
 	char **p = ss;
 
@@ -68,12 +68,12 @@ void *_realloc(void *p, unsigned int oldSize, unsigned int newSize)
 	return (pt);
 }
 /**
- * bfree - frees a pointer and NULLs the address
+ * b_free - frees a pointer and NULLs the address
  * @p: pointer's address to be freed
  *
  * Return: 1 success, 0 failure
  */
-int bfree(void **p)
+int b_free(void **p)
 {
 	if (p && *p)
 	{

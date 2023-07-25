@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * list_len - precise length of list
+ * listLength - precise length of list
  * @head: 1st node
  * Return: list's size
  */
@@ -61,7 +61,7 @@ size_t printList(const list_t *head)
 
 	while (head)
 	{
-		_puts(convert_number(head->number, 10, 0));
+		_puts(numberConverter(head->number, 10, 0));
 		_putchar(':');
 		_putchar(' ');
 		_puts(head->s ? head->s : "(nil)");

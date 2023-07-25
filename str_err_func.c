@@ -1,10 +1,10 @@
 #include "shell.h"
 /**
- *_eputs - displays a string
+ *_eputs_ - displays a string
  * @s: string input
  * Return: nothing
  */
-void _eputs(char *s)
+void _eputs_(char *s)
 {
 	int j = 0;
 
@@ -12,17 +12,17 @@ void _eputs(char *s)
 		return;
 	while (s[j] != '\0')
 	{
-		_eputchar(s[j]);
+		_eputchar_(s[j]);
 		j++;
 	}
 }
 
 /**
- * _eputchar - puts the character to stderr
+ * _eputchar_ - puts the character to stderr
  * @cc: the  character to be  written
  * Return: 1 success and -1 failure
  */
-int _eputchar(char cc)
+int _eputchar_(char cc)
 {
 	static int j;
 	static char buff[WRITE_BUFF_S];
@@ -38,12 +38,12 @@ int _eputchar(char cc)
 }
 
 /**
- * _putfd - puts the character into filedescriptor
+ * _putfd_ - puts the character into filedescriptor
  * @cc: character to write
  * @f: file's descriptor
  * Return: 1  success, -1 failure
  */
-int _putfd(char cc, int f)
+int _putfd_(char cc, int f)
 {
 	static int j;
 	static char buff[WRITE_BUFF_S];
@@ -59,12 +59,12 @@ int _putfd(char cc, int f)
 }
 
 /**
- *_putsfd - displays a string
+ *_putsfd_ - displays a string
  * @s: string input
  * @f: filedescriptor
  * Return: characters' number
  */
-int _putsfd(char *s, int f)
+int _putsfd_(char *s, int f)
 {
 	int j = 0;
 
@@ -72,7 +72,7 @@ int _putsfd(char *s, int f)
 		return (0);
 	while (*s)
 	{
-		j += _putfd(*s++, f);
+		j += _putfd_(*s++, f);
 	}
 	return (j);
 }

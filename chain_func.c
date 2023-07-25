@@ -117,13 +117,13 @@ int replace_vars(info_t *inf)
 		if (!_strcmp(inf->argv[k], "$?"))
 		{
 			replace_string(&(inf->argv[k]),
-				_strdup(convert_number(inf->status, 10, 0)));
+				_strdup(numberConverter(inf->status, 10, 0)));
 			continue;
 		}
 		if (!_strcmp(inf->argv[k], "$$"))
 		{
 			replace_string(&(inf->argv[k]),
-				_strdup(convert_number(getpid(), 10, 0)));
+				_strdup(numberConverter(getpid(), 10, 0)));
 			continue;
 		}
 		_node = nodeStartsWith(inf->env, &inf->argv[k][1], '=');

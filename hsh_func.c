@@ -1,6 +1,6 @@
 #include "shell.h"
 
-/**i
+/**
  * _hsh_ - main shell loop
  * @inf: Structure that contains possible args
  * @av: argument vector
@@ -14,24 +14,24 @@ int _hsh_(info_t *inf, char **av)
 
 	while (s != -1 && builtinR != -2)
 	{
-		clear_info(inf);
+		clearInfo(inf);
 		if (_interactive(inf))
 			_puts("$ ");
-		_eputchar(BUFF_FLUSH);
+		_eputchar_(BUFF_FLUSH);
 		s = inputGetter(inf);
 		if (s != -1)
 		{
-			set_info(inf, av);
+			infoSetter(inf, av);
 			builtinR = builtinfinder(inf);
 			if (builtinR == -1)
 				cmdFinder(inf);
 		}
 		else if (_interactive(inf))
 			_putchar('\n');
-		free_info(inf, 0);
+		freeInfo(inf, 0);
 	}
 	historyWriter(inf);
-	free_info(inf, 1);
+	freeInfo(inf, 1);
 	if (!_interactive(inf) && inf->status)
 		exit(inf->status);
 	if (builtinR == -2)
@@ -56,13 +56,13 @@ int builtinfinder(info_t *inf)
 {
 	int j, builtInR = -1;
 	builtinTable builtin_tbl[] = {
-		{"exit", _myexit},
+		{"exit", myExit},
 		{"env", myEnv},
-		{"help", _myhelp},
+		{"help", myHelper},
 		{"history", myHistory},
 		{"setenv", mySetEnv},
 		{"unsetenv", myUnsetEnv},
-		{"cd", _mycd},
+		{"cd", myCd},
 		{"alias", myAlias},
 		{NULL, NULL}
 	};
@@ -114,7 +114,7 @@ void cmdFinder(info_t *inf)
 		else if (*(inf->arg) != '\n')
 		{
 			inf->status = 127;
-			print_error(inf, "not found\n");
+			errorPrinter(inf, "not found\n");
 		}
 	}
 }
@@ -139,7 +139,7 @@ void forkComd(info_t *inf)
 	{
 		if (execve(inf->path, inf->argv, getEnviron(inf)) == -1)
 		{
-			free_info(inf, 1);
+			freeInfo(inf, 1);
 			if (errno == EACCES)
 				exit(126);
 			exit(1);
@@ -152,7 +152,7 @@ void forkComd(info_t *inf)
 		{
 			inf->status = WEXITSTATUS(inf->status);
 			if (inf->status == 126)
-				print_error(inf, "Permission denied\n");
+				errorPrinter(inf, "Permission denied\n");
 		}
 	}
 }

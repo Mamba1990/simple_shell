@@ -126,9 +126,9 @@ char **_strtow_2(char *s, char dl);
 
 /* Memory Functions */
 char *_memset(char *s, char b, unsigned int n);
-void ffree(char **ss);
+void f_free(char **ss);
 void *_realloc(void *p, unsigned int oldSize, unsigned int newSize);
-int bfree(void **p);
+int b_free(void **p);
 
 /* Supplumentary Functions */
 
@@ -154,22 +154,22 @@ ssize_t indexNodeGetter(list_t *h, list_t *_node);
 
 /* Errors Functions */
 /* 1 */
-void _eputs(char *s);
-int _eputchar(char cc);
-int _putfd(char cc, int f);
-int _putsfd(char *s, int f);
+void _eputs_(char *s);
+int _eputchar_(char cc);
+int _putfd_(char cc, int f);
+int _putsfd_(char *s, int f);
 
 /* 2 */
-int _erratoi(char *str);
-void print_error(info_t *inf, char *errs);
-int print_d(int iput, int fid);
-char *convert_number(long int number, int b, int flgs);
-void remove_comments(char *buff);
+int _erratoi_(char *str);
+void errorPrinter(info_t *inf, char *errs);
+int dPrinter(int iput, int fid);
+char *numberConverter(long int number, int b, int flgs);
+void removeComment(char *buff);
 
 /* Informations Getter Functions */
-void clear_info(info_t *inf);
-void set_info(info_t *inf, char **av);
-void free_info(info_t *inf, int all_f);
+void clearInfo(info_t *inf);
+void infoSetter(info_t *inf, char **av);
+void freeInfo(info_t *inf, int all_f);
 
 /* Environ Functions */
 /* 1 */
@@ -198,9 +198,9 @@ char *pathFinder(info_t *inf, char *path_str, char *_cmd);
 /* Builters Functions */
 
 /* 1 */
-int _myexit(info_t *inf);
-int _mycd(info_t *inf);
-int _myhelp(info_t *inf);
+int myExit(info_t *inf);
+int myCd(info_t *inf);
+int myHelper(info_t *inf);
 
 /* 2 */
 int myHistory(info_t *inf);
