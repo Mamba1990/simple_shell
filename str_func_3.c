@@ -42,14 +42,12 @@ char *_strncat(char *dest, char *src, int n)
 	char *ss = dest;
 
 	j = 0;
-	i = 0;
 	while (dest[j] != '\0')
 		j++;
-	while (src[i] != '\0' && i < n)
+	for (i = 0; src[i] != '\0' && i < n; i++)
 	{
 		dest[j] = src[i];
 		j++;
-		i++;
 	}
 	if (i < n)
 		dest[j] = '\0';

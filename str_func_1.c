@@ -8,14 +8,13 @@
  */
 int _strlen(char *s)
 {
-	int j = 0;
+	int length;
 
-	if (!s)
-		return (0);
-
-	while (*s++)
-		j++;
-	return (j);
+	for (length = 0; *s != '\0'; length++)
+	{
+		s++;
+	}
+	return (length);
 }
 
 /**
@@ -64,12 +63,19 @@ char *starts_with(const char *hay, const char *nee)
 */
 char *_strcat(char *dest, char *src)
 {
-	char *r = dest;
+	int i = 0;
+	int j = 0;
 
-	while (*dest)
-		dest++;
-	while (*src)
-		*dest++ = *src++;
-	*dest = *src;
-	return (r);
+	while (*(dest + i) != '\0')
+	{
+		i++;
+	}
+	while (*(src + j) != '\0')
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
